@@ -290,6 +290,7 @@ const unsigned static char *menu="\n"
 "\n"
 "    Seleccione: s -> Valores de los sensores    \n"
 "    Seleccione: a -> Leer canales ADC           \n"
+"    Seleccione: m -> Leer gases MQ9             \n"
 "    Seleccione: f -> Sensor de gases            \n"
 "    Seleccione: r -> Recibir LoRa               \n"
 "    Seleccione: t -> Transmitir LoRa            \n"
@@ -405,6 +406,20 @@ void main()
 				_printf("\n\n");
 				_printf("----------------------------------------------\n");    
 				break;
+
+			//Lectura inmediata MQ9.
+			case 'm': {
+				int co_ppm = MQ9_ReadCOppm(MCP3004_CH0);
+				int ch4_ppm = MQ9_ReadCH4ppm(MCP3004_CH0);
+
+				_printf("----------------------------------------------\n");
+				_printf("--------------- MQ9 GASES -------------------\n");
+				_printf("----------------------------------------------\n");
+				_printf("CO: %d ppm\n", co_ppm);
+				_printf("CH4: %d ppm\n", ch4_ppm);
+				_printf("----------------------------------------------\n");
+				break;
+			}
 
 			//Lectura ADC MCP3004.
 			case 'a': {
