@@ -122,7 +122,7 @@ unsigned int LoraSx1262_begin(){ //Cambiamos miembro de clase por función (chan
 	_delay_ms(10);
 
 
-	//LO FORZAMOS SOLO A TRANSMITIR
+	  //LO FORZAMOS SOLO A TRANSMITIR
 	GPOUT |=  L_TX; // L_TX = 1
 	GPOUT &= ~L_RX; // L_RX = 0
 
@@ -271,6 +271,7 @@ void LoraSx1262_transmit(uint8_t *data, int dataLen) {
   # - CRC on/off
   # - IQ Inversion on/off
   */
+  GPOUT |= (L_TX | L_RX);
   //LO FORZAMOS SOLO A TRANSMITIR
   GPOUT |=  L_TX; // L_TX = 1
   GPOUT &= ~L_RX; // L_RX = 0
@@ -323,7 +324,7 @@ void LoraSx1262_transmit(uint8_t *data, int dataLen) {
   digitalWrite(SX1262_NSS, 1); //Disable radio chip-select
   LoraSx1262_waitForRadioCommandCompletion(LoraSx1262_transmitTimeout); //Wait for tx to complete, with a timeout so we don't wait forever
   //Remember that we are in Tx mode.  If we want to receive a packet, we need to switch into receiving mode
-  unsigned int inReceiveMode = false;
+  inReceiveMode = false;
 }
 
 
@@ -378,6 +379,7 @@ unsigned int LoraSx1262_waitForRadioCommandCompletion(uint32_t timeout) {
 //There's no such thing as "setModeTransmit" because it is set automatically when transmit() is called
 void LoraSx1262_setModeReceive() {
   if (inReceiveMode) { return; }  //We're already in receive mode, this would do nothing
+  GPOUT |= (L_TX | L_RX);
   //LO FORZAMOS SOLO A TRANSMITIR
   GPOUT &= ~L_TX; // L_TX = 0
   GPOUT |=  L_RX; // L_RX = 1
@@ -407,7 +409,7 @@ void LoraSx1262_setModeReceive() {
   LoraSx1262_waitForRadioCommandCompletion(100);
 
   //Remember that we're in receive mode so we don't need to run this code again unnecessarily
-  unsigned int  inReceiveMode = true;
+  inReceiveMode = true;
 }
 
 

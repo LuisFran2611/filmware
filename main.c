@@ -7,7 +7,7 @@
 #include "ModuloBME.h"
 #include "ModuloGPS.h" 
 #include "SPI.h"
-#include "LoRa.h"
+#include "lora_sx1262.h"
 #include "MCP3004.h"
 #include "ModuloMQ9.h"
 #include "GP2Y1010.h"
@@ -156,7 +156,7 @@ uint8_t _getchUART1()
 #include "ModuloGPS.c" 
 #include "ModuloBME.c"
 #include "SPI.c"
-#include "LoRa.c"
+#include "lora_sx1262.c"
 #include "MCP3004.c"
 #include "ModuloMQ9.c"
 #include "GP2Y1010.c"
@@ -382,13 +382,12 @@ void main()
 			
 			//Transmisión del LoRa	
 			case 't':   
-				if(LoraSx1262_begin()){
+				if(SX1262_Init()){
 					_printf("Modulo LoRa iniciado\n");
-					LoraSx1262_configSetFrequency(868000000);
-					LoraSx1262_configSetBandwidth(4);      //125 kHz
-					LoraSx1262_configSetSpreadingFactor(7); //SF7
-					LoraSx1262_configSetSyncWord(0x0014);
-					LoraSx1262_transmit((uint8_t *)"Hola Mundo!", 11);
+					SX1262_configSetFrequency(868000000);
+					SX1262_configSetBandwidth(4);      //125 kHz
+					SX1262_configSetSpreadingFactor(7); //SF7
+					SX1262_transmit((uint8_t *)"Hola Mundo!", 11);
 				}
 				else {
 					_printf("Error al iniciar el LoRa\n");
@@ -398,13 +397,12 @@ void main()
 
 			//Recepción del LoRa
 			case 'r':
-			if(LoraSx1262_begin()){
+			if(SX1262_Init()){
 					_printf("Modulo LoRa iniciado\n");
-					LoraSx1262_configSetFrequency(868000000);
-					LoraSx1262_configSetBandwidth(4);      //125 kHz
-					LoraSx1262_configSetSpreadingFactor(7); //SF7
-					LoraSx1262_configSetSyncWord(0x0014);
-					LoraSx1262_lora_receive_async(Buff, 500);
+					SX1262_configSetFrequency(868000000);
+					SX1262_configSetBandwidth(4);      //125 kHz
+					SX1262_configSetSpreadingFactor(7); //SF7
+					SX1262_lora_receive_async(Buff, 500);
 				} 
 				else {
 					_printf("Error al iniciar el LoRa\n");
