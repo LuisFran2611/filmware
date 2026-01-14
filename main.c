@@ -159,7 +159,6 @@ uint8_t _getchUART1()
 #include "LoRa.c"
 #include "MCP3004.c"
 #include "ModuloMQ9.c"
-#include "GP2Y1010.c"
  
 const static char *menutxt="\n"
 "\n\n"
@@ -302,6 +301,19 @@ static void toggle_gpout(uint32_t mask, const char *label)
 	}
 }
 
+int GP2Y1010_ReadRaw(uint8_t channel)
+{
+	int adc;
+
+	GPOUT |= M2_ON_OFF;
+	_delay_ms(GP2Y1010_SAMPLE_MS);
+	adc = MCP3004_Read(channel);
+	_delay_ms(GP2Y1010_LED_ON_MS - GP2Y1010_SAMPLE_MS);
+	GPOUT &= ~M2_ON_OFF;
+
+	return adc;
+}
+
 static void blink_leds_even_odd(void)
 {
 	uint32_t led_mask = LED0 | LED1 | LED2 | LED3;
@@ -414,7 +426,7 @@ void main()
 				_printf("\n La temperatura registrada es: ");
 				_printf("%02d.%d%c", temp_comp/100, temp_comp%100, 167);
 				_printf("\n La presion registrada es: ");
-				_printf("%d Pascuales",press_comp/100);
+				_printf("%d Pascales",press_comp/100);
 				_printf("\n La humedad registrada es: ");
 				_printf("%02d.%03d%c", hum_comp/1000, hum_comp%1000, 37);
 				_printf("                                              \n");
