@@ -294,7 +294,7 @@ const unsigned static char *menu="\n"
 "    Seleccione: u -> EN_5V_UP on/off            \n"
 "    Seleccione: v -> EN_5V_M4 on/off            \n"
 "    Seleccione: w -> EN_1V4_M4 on/off           \n"
-"    Seleccione: f -> Sensor de gases            \n"
+"    Seleccione: I -> Leer TIMER                 \n"
 "    Seleccione: r -> Recibir LoRa               \n"
 "    Seleccione: t -> Transmitir LoRa            \n"
 "    Seleccione: g -> GPS                        \n"
@@ -444,6 +444,10 @@ void main()
 			case 'w':
 				toggle_gpout(EN_1V4_M4, "EN_1V4_M4");
 				break;
+			//Estado del TIMER.
+			case 'I':
+				_printf("TIMER: %u\n", TIMER);
+				break;
 
 			//Lectura ADC MCP3004.
 			case 'a': {
@@ -476,11 +480,6 @@ void main()
 			case 'q':
 				return;
 				
-				
-			//Sensor de gases.
-			case 'f':
-				Lectura_Gas();
-				break;
 				
 			default:
 				continue;
