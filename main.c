@@ -303,6 +303,17 @@ static void toggle_gpout(uint32_t mask, const char *label)
 	}
 }
 
+static int ft_strlen(const char *s)
+{
+	int len = 0;
+
+	if (s == NULL) return 0;
+	while (s[len] != '\0') {
+		len++;
+	}
+	return len;
+}
+
 static void blink_leds_even_odd(void)
 {
 	uint32_t led_mask = LED0 | LED1 | LED2 | LED3;
@@ -436,7 +447,7 @@ void main()
 					         press_comp,
 					         lat, lon);
 
-					SX1262_transmit((uint8_t *)msg, (int)strlen(msg));
+					SX1262_transmit((uint8_t *)msg, ft_strlen(msg));
 					msg_id++;
 					_delay_ms(1000);
 				}
