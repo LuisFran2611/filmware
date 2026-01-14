@@ -159,6 +159,7 @@ uint8_t _getchUART1()
 #include "LoRa.c"
 #include "MCP3004.c"
 #include "ModuloMQ9.c"
+#include "GP2Y1010.c"
  
 const static char *menutxt="\n"
 "\n\n"
@@ -299,19 +300,6 @@ static void toggle_gpout(uint32_t mask, const char *label)
 		GPOUT |= mask;
 		_printf("%s ON\n", label);
 	}
-}
-
-int GP2Y1010_ReadRaw(uint8_t channel)
-{
-	int adc;
-
-	GPOUT |= M2_ON_OFF;
-	_delay_ms(GP2Y1010_SAMPLE_MS);
-	adc = MCP3004_Read(channel);
-	_delay_ms(GP2Y1010_LED_ON_MS - GP2Y1010_SAMPLE_MS);
-	GPOUT &= ~M2_ON_OFF;
-
-	return adc;
 }
 
 static void blink_leds_even_odd(void)
