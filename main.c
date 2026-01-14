@@ -384,6 +384,7 @@ void main()
 			case 't':   
 				if(LoraSx1262_begin()){
 					_printf("Modulo LoRa iniciado\n");
+					LoraSx1262_configSetFrequency(868000000);
 					LoraSx1262_configSetBandwidth(4);      //125 kHz
 					LoraSx1262_configSetSpreadingFactor(7); //SF7
 					LoraSx1262_configSetSyncWord(0x0014);
@@ -399,6 +400,7 @@ void main()
 			case 'r':
 			if(LoraSx1262_begin()){
 					_printf("Modulo LoRa iniciado\n");
+					LoraSx1262_configSetFrequency(868000000);
 					LoraSx1262_configSetBandwidth(4);      //125 kHz
 					LoraSx1262_configSetSpreadingFactor(7); //SF7
 					LoraSx1262_configSetSyncWord(0x0014);
