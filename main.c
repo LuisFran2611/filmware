@@ -352,6 +352,10 @@ void main()
 	IRQVECT7=(uint32_t)irq7_handler;
 	         
 	IRQEN=1;			// Enable UART RX IRQ
+
+	// Habilitar timer con IRQ para que TIMER avance.
+	MAX_COUNT = 0xFFFFFFFFu;
+	IRQEN |= IRQ_TIMER;
 	
 	uint8_t Buff[500];
 	
@@ -447,6 +451,10 @@ void main()
 				break;
 			//Estado del TIMER.
 			case 'i':
+				if ((IRQEN & IRQ_TIMER) == 0) {
+					MAX_COUNT = 0xFFFFFFFFu;
+					IRQEN |= IRQ_TIMER;
+				}
 				_printf("TIMER: %u\n", TIMER);
 				break;
 			//Sensor polvo GP2Y1010.
