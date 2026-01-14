@@ -374,12 +374,6 @@ void main()
 			_puts("\n"); 
            
 			switch (cmd){ 
-			case '2':
-				IRQEN^=2;	// Toggle IRQ enable for UART TX
-				_delay_ms(100);
-				break;  
-			
-			
 			//Transmisión del LoRa	
 			case 't':   
 				if(SX1262_Init()){
@@ -418,7 +412,7 @@ void main()
 				hum_comp = returnHUMIDITY(temp_comp);
 				
 				_printf("----------------------------------------------\n");
-				_printf("--------------- DATOS OBTENIDOS --------------\n");
+				_printf("------------------- BME680 -------------------\n");
 				_printf("----------------------------------------------\n");
 				_printf("                                                ");
 				_printf("\n La temperatura registrada es: ");
@@ -438,7 +432,7 @@ void main()
 				int ch4_ppm = MQ9_ReadCH4ppm(MCP3004_CH0);
 
 				_printf("----------------------------------------------\n");
-				_printf("--------------- MQ9 GASES -------------------\n");
+				_printf("---------------- MQ9 GASES -------------------\n");
 				_printf("----------------------------------------------\n");
 				_printf("CO: %d ppm\n", co_ppm);
 				_printf("CH4: %d ppm\n", ch4_ppm);
@@ -484,7 +478,7 @@ void main()
 				adc3 = MCP3004_Read(MCP3004_CH3);
 
 				_printf("----------------------------------------------\n");
-				_printf("--------------- ADC MCP3004 -----------------\n");
+				_printf("---------------- ADC MCP3004 -----------------\n");
 				_printf("----------------------------------------------\n");
 				_printf("CH0: %d\n", adc0);
 				_printf("CH1: %d\n", adc1);
