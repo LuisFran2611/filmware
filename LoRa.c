@@ -201,7 +201,10 @@ void LoraSx1262_configureRadioEssentials() {
 
   //Set modulation parameters is just one more SPI command, but since it
   //is often called frequently when changing the radio config, it's broken up into its own function
-  LoraSx1262_configSetPreset(PRESET_LONGRANGE);  //Sets default modulation parameters (changed from DEFAULT TO LONGRANGE)
+  LoraSx1262_configSetPreset(PRESET_LONGRANGE);  //Sets default modulation parameters
+  LoraSx1262_configSetBandwidth(4);             //125khz
+  LoraSx1262_configSetSpreadingFactor(7);       //SF7
+  LoraSx1262_configSetSyncWord(0x0014);         //Sync word 0x14
 
   // Set PA Config
   // See datasheet 13.1.4 for descriptions and optimal settings recommendations
@@ -351,14 +354,12 @@ unsigned int LoraSx1262_waitForRadioCommandCompletion(uint32_t timeout) {
     //Status 0, 1, 2 mean we're still busy.  Anything else means we're done.
     //Commands 3-6 = command timeout, command processing error, failure to execute command, and Tx Done (respoectively)
     if (commandStatus != 0 && commandStatus != 1 && commandStatus != 2) {
-	  _printf("Transmitido1\n");
       dataTransmitted = true;
     }
 
     //If we're in standby mode, we don't need to wait at all
     //0x03 = STBY_XOSC, 0x02= STBY_RC
     if (chipMode == 0x03 || chipMode == 0x02) {
-	  _printf("Transmitido2\n");
       dataTransmitted = true;
     }
 
@@ -368,8 +369,6 @@ unsigned int LoraSx1262_waitForRadioCommandCompletion(uint32_t timeout) {
       return false;
     }
   }
-  
-  _printf("WE did it\n");
   return true;
 }
 
@@ -640,13 +639,25 @@ unsigned int LoraSx1262_configSetCodingRate(int codingRate) {
 }
 
 
-unsigned int LoraSx126_configSetSpreadingFactor(int spreadingFactor) {
+unsigned int LoraSx1262_configSetSpreadingFactor(int spreadingFactor) {
   if (spreadingFactor < 5 || spreadingFactor > 12) { return false; }
 
   //The datasheet highly recommends enabling "LowDataRateOptimize" for SF11 and SF12
   LoraSx1262_lowDataRateOptimize = (spreadingFactor >= 11) ? 1 : 0;  //Turn on for SF11+SF12, turn off for anything else
   LoraSx1262_spreadingFactor = spreadingFactor;
   LoraSx1262_updateModulationParameters();
+  return true;
+}
+
+
+unsigned int LoraSx1262_configSetSyncWord(uint16_t syncWord) {
+  digitalWrite(SX1262_NSS, 0); //Enable radio chip-select
+  spiBuff[0] = 0x9C;           //Opcode for "SetLoRaSyncWord"
+  spiBuff[1] = (syncWord >> 8) & 0xFF;
+  spiBuff[2] = syncWord & 0xFF;
+  SPI_transfer(spiBuff, 3);
+  digitalWrite(SX1262_NSS, 1); //Disable radio chip-select
+  _delay_ms(100);              //Give time for radio to process the command
   return true;
 }
 

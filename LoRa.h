@@ -18,6 +18,8 @@
 #ifndef __LORA1262__
 #define __LORA1262__
 
+#include <stdint.h>
+
 //#include <Arduino.h>
 //#include <SPI.h>
 
@@ -69,6 +71,7 @@ unsigned int LoraSx1262_configSetFrequency(long frequencyInHz);
 unsigned int LoraSx1262_configSetBandwidth(int bandwidth);
 unsigned int LoraSx1262_configSetCodingRate(int codingRate);
 unsigned int LoraSx1262_configSetSpreadingFactor(int spreadingFactor);
+unsigned int LoraSx1262_configSetSyncWord(uint16_t syncWord);
 uint32_t LoraSx1262_frequencyToPLL(long freqInHz);
 
 

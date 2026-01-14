@@ -384,7 +384,10 @@ void main()
 			case 't':   
 				if(LoraSx1262_begin()){
 					_printf("Modulo LoRa iniciado\n");
-					LoraSx1262_transmit("aaoo", 5);
+					LoraSx1262_configSetBandwidth(4);      //125 kHz
+					LoraSx1262_configSetSpreadingFactor(7); //SF7
+					LoraSx1262_configSetSyncWord(0x0014);
+					LoraSx1262_transmit((uint8_t *)"Hola Mundo!", 11);
 				}
 				else {
 					_printf("Error al iniciar el LoRa\n");
@@ -396,6 +399,9 @@ void main()
 			case 'r':
 			if(LoraSx1262_begin()){
 					_printf("Modulo LoRa iniciado\n");
+					LoraSx1262_configSetBandwidth(4);      //125 kHz
+					LoraSx1262_configSetSpreadingFactor(7); //SF7
+					LoraSx1262_configSetSyncWord(0x0014);
 					LoraSx1262_lora_receive_async(Buff, 500);
 				} 
 				else {
@@ -495,8 +501,7 @@ void main()
 				  
 			case 'q':
 				return;
-				
-				
+					
 			default:
 				continue;
 			}
