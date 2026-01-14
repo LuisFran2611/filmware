@@ -291,6 +291,9 @@ const unsigned static char *menu="\n"
 "    Seleccione: s -> Valores de los sensores    \n"
 "    Seleccione: a -> Leer canales ADC           \n"
 "    Seleccione: m -> Leer gases MQ9             \n"
+"    Seleccione: u -> EN_5V_UP on/off            \n"
+"    Seleccione: v -> EN_5V_M4 on/off            \n"
+"    Seleccione: w -> EN_1V4_M4 on/off           \n"
 "    Seleccione: f -> Sensor de gases            \n"
 "    Seleccione: r -> Recibir LoRa               \n"
 "    Seleccione: t -> Transmitir LoRa            \n"
@@ -298,6 +301,17 @@ const unsigned static char *menu="\n"
 "    Seleccione: q -> Salir                      \n"
 "________________________________________________\n"
 "\n\n";
+
+static void toggle_gpout(uint32_t mask, const char *label)
+{
+	if (GPOUT & mask) {
+		GPOUT &= ~mask;
+		_printf("%s OFF\n", label);
+	} else {
+		GPOUT |= mask;
+		_printf("%s ON\n", label);
+	}
+}
 
    
   
@@ -420,6 +434,16 @@ void main()
 				_printf("----------------------------------------------\n");
 				break;
 			}
+			//Control manual de alimentaciones.
+			case 'u':
+				toggle_gpout(EN_5V_UP, "EN_5V_UP");
+				break;
+			case 'v':
+				toggle_gpout(EN_5V_M4, "EN_5V_M4");
+				break;
+			case 'w':
+				toggle_gpout(EN_1V4_M4, "EN_1V4_M4");
+				break;
 
 			//Lectura ADC MCP3004.
 			case 'a': {
