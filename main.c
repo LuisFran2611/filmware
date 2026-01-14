@@ -281,7 +281,7 @@ const unsigned static char *menu="\n"
 "    Seleccione: u -> EN_5V_UP on/off            \n"
 "    Seleccione: v -> EN_5V_M4 on/off            \n"
 "    Seleccione: w -> EN_1V4_M4 on/off           \n"
-"    Seleccione: I -> Leer TIMER                 \n"
+"    Seleccione: i -> Leer TIMER                 \n"
 "    Seleccione: p -> Leer GP2Y1010              \n"
 "    Seleccione: r -> Recibir LoRa               \n"
 "    Seleccione: t -> Transmitir LoRa            \n"
@@ -433,7 +433,7 @@ void main()
 				toggle_gpout(EN_1V4_M4, "EN_1V4_M4");
 				break;
 			//Estado del TIMER.
-			case 'I':
+			case 'i':
 				_printf("TIMER: %u\n", TIMER);
 				break;
 			//Sensor polvo GP2Y1010.
