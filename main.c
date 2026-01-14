@@ -447,6 +447,7 @@ void main()
 					         press_comp,
 					         lat, lon);
 
+					_printf("%s\n", msg);
 					SX1262_transmit((uint8_t *)msg, ft_strlen(msg));
 					msg_id++;
 					_delay_ms(1000);
