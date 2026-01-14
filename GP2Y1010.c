@@ -26,7 +26,5 @@ int GP2Y1010_ReadRaw(uint8_t channel)
 	}
 	t_off = TIMER;
 
-	_printf("GP2Y1010: sample t=%u adc=%d\n", t_sample, adc);
-
 	return adc;
 }

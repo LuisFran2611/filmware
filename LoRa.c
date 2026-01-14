@@ -283,7 +283,6 @@ void LoraSx1262_transmit(uint8_t *data, int dataLen) {
   SPI_transfer(spiBuff, 7);
   digitalWrite(SX1262_NSS, 1); //Disable radio chip-select
   LoraSx1262_waitForRadioCommandCompletion(100);  //Give time for radio to process the command
-  _printf("Primer punto de control\n");
   //Write the payload to the buffer
   //  Reminder: PayloadLength is defined in setPacketParams
   digitalWrite(SX1262_NSS, 0); //Enable radio chip-select
@@ -299,9 +298,7 @@ void LoraSx1262_transmit(uint8_t *data, int dataLen) {
   //Copy contents to SPI buff until it's full, and then write that
   //TEST: I tested this method, which uses about 0.1ms (100 microseconds) more time, but it saves us about 10% of ram.
   //I think this is a fair trade 
-//  _printf("Tercer punto de control\n");
   uint8_t size = sizeof(spiBuff);
-  _printf("Tercer punto de control\n");
   for (uint16_t i = 0; i < dataLen; i += size) {
     if (i + size > dataLen) { size = dataLen - i; }
     _memcpy(spiBuff,&(data[i]),size);
@@ -309,7 +306,6 @@ void LoraSx1262_transmit(uint8_t *data, int dataLen) {
     SPI_transfer(spiBuff, size); //Write the payload itself
   }
  
-  _printf("Cuarto punto de control\n");
   digitalWrite(SX1262_NSS, 1); //Disable radio chip-select
   LoraSx1262_waitForRadioCommandCompletion(1000);   //Give time for radio to process the command
 
@@ -323,7 +319,6 @@ void LoraSx1262_transmit(uint8_t *data, int dataLen) {
   SPI_transfer(spiBuff, 4);
   digitalWrite(SX1262_NSS, 1); //Disable radio chip-select
   LoraSx1262_waitForRadioCommandCompletion(LoraSx1262_transmitTimeout); //Wait for tx to complete, with a timeout so we don't wait forever
-  _printf("Quinto punto de control\n");
   //Remember that we are in Tx mode.  If we want to receive a packet, we need to switch into receiving mode
   unsigned int inReceiveMode = false;
 }
