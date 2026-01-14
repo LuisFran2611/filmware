@@ -283,6 +283,7 @@ const unsigned static char *menu="\n"
 "    Seleccione: w -> EN_1V4_M4 on/off           \n"
 "    Seleccione: i -> Leer TIMER                 \n"
 "    Seleccione: p -> Leer GP2Y1010              \n"
+"    Seleccione: l -> Leds pares/impares         \n"
 "    Seleccione: r -> Recibir LoRa               \n"
 "    Seleccione: t -> Transmitir LoRa            \n"
 "    Seleccione: g -> GPS                        \n"
@@ -299,6 +300,18 @@ static void toggle_gpout(uint32_t mask, const char *label)
 		GPOUT |= mask;
 		_printf("%s ON\n", label);
 	}
+}
+
+static void blink_leds_even_odd(void)
+{
+	uint32_t led_mask = LED0 | LED1 | LED2 | LED3;
+	uint32_t keep = GPOUT & ~led_mask;
+
+	GPOUT = keep | (LED0 | LED2);
+	_delay_ms(200);
+	GPOUT = keep | (LED1 | LED3);
+	_delay_ms(200);
+	GPOUT = keep;
 }
 
    
@@ -442,6 +455,10 @@ void main()
 				_printf("GP2Y1010 ADC: %d\n", raw);
 				break;
 			}
+			//LEDs pares e impares.
+			case 'l':
+				blink_leds_even_odd();
+				break;
 
 			//Lectura ADC MCP3004.
 			case 'a': {
