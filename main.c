@@ -10,6 +10,7 @@
 #include "LoRa.h"
 #include "MCP3004.h"
 #include "ModuloMQ9.h"
+#include "GP2Y1010.h"
 
 typedef unsigned char  u8;
 typedef unsigned short u16;
@@ -95,21 +96,6 @@ void delay_loop(uint32_t val);	// (3 + 3*val) cycles
 #define _delay_us(n) delay_loop((n*(CCLK/1000)-3000)/3000)
 #define _delay_ms(n) delay_loop((n*(CCLK/1000)-30)/3)
  
-//GPOUT CHANGED
-/*
-#define LED0       (1u<<0)
-#define LED1       (1u<<1)
-#define LED2       (1u<<2)
-#define LED3       (1u<<3)
-#define M2_ON_OFF  (1u<<4)
-#define EN_1V4_M4  (1u<<5)
-#define EN_5V_M4   (1u<<6)
-#define EN_5V_UP   (1u<<7)
-#define L_TX       (1u<<8)
-#define L_RX       (1u<<9)
-#define LORA_RESET (1u<<10)
-*/
- 
 void _putch(int c)
 {
 	while((UARTSTA&2)==0);
@@ -173,6 +159,7 @@ uint8_t _getchUART1()
 #include "LoRa.c"
 #include "MCP3004.c"
 #include "ModuloMQ9.c"
+#include "GP2Y1010.c"
  
 const static char *menutxt="\n"
 "\n\n"
@@ -295,6 +282,7 @@ const unsigned static char *menu="\n"
 "    Seleccione: v -> EN_5V_M4 on/off            \n"
 "    Seleccione: w -> EN_1V4_M4 on/off           \n"
 "    Seleccione: I -> Leer TIMER                 \n"
+"    Seleccione: p -> Leer GP2Y1010              \n"
 "    Seleccione: r -> Recibir LoRa               \n"
 "    Seleccione: t -> Transmitir LoRa            \n"
 "    Seleccione: g -> GPS                        \n"
@@ -448,6 +436,12 @@ void main()
 			case 'I':
 				_printf("TIMER: %u\n", TIMER);
 				break;
+			//Sensor polvo GP2Y1010.
+			case 'p': {
+				int raw = GP2Y1010_ReadRaw(MCP3004_CH1);
+				_printf("GP2Y1010 ADC: %d\n", raw);
+				break;
+			}
 
 			//Lectura ADC MCP3004.
 			case 'a': {
@@ -471,12 +465,9 @@ void main()
 				
 			//GPS 	
 			case 'g': 
-				lectura_GPS();
-				char cmd = _getchUART0(); 
+				lectura_GPS(); 
 				break;
 				  
-				
-			//Eliminar.	
 			case 'q':
 				return;
 				
