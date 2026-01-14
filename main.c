@@ -284,6 +284,7 @@ const unsigned static char *menu="\n"
 "    Seleccione: i -> Leer TIMER                 \n"
 "    Seleccione: p -> Leer GP2Y1010              \n"
 "    Seleccione: l -> Leds pares/impares         \n"
+"    Seleccione: c -> Prueba de campo LoRa       \n"
 "    Seleccione: r -> Recibir LoRa               \n"
 "    Seleccione: t -> Transmitir LoRa            \n"
 "    Seleccione: g -> GPS                        \n"
@@ -402,6 +403,47 @@ void main()
 					_printf("Error al iniciar el LoRa\n");
 				}
 				break;
+
+			//Prueba de campo LoRa (envio cada 1 s).
+			case 'c': {
+				int msg_id = 0;
+				char lat[16];
+				char lon[16];
+				char msg[200];
+
+				if(!SX1262_Init()){
+					_printf("Error al iniciar el LoRa\n");
+					break;
+				}
+
+				SX1262_configSetFrequency(868000000);
+				SX1262_configSetBandwidth(4);      //125 kHz
+				SX1262_configSetSpreadingFactor(7); //SF7
+
+				while (!haschar()) {
+					startBME680();
+					temp_comp = returnTemp();
+					press_comp = returnPressure();
+					hum_comp = returnHUMIDITY(temp_comp);
+
+					GPS_ReadLatLon(lat, (int)sizeof(lat), lon, (int)sizeof(lon));
+
+					_sprintf(msg,
+					         "##%5d Grupo 2, T= %02d.%02d, H= %02d.%03d %%, P=%d, LAT = %10s, LON = %10s.",
+					         msg_id,
+					         temp_comp/100, temp_comp%100,
+					         hum_comp/1000, hum_comp%1000,
+					         press_comp,
+					         lat, lon);
+
+					SX1262_transmit((uint8_t *)msg, (int)strlen(msg));
+					msg_id++;
+					_delay_ms(1000);
+				}
+
+				if (haschar()) _getch();
+				break;
+			}
 				
 				
 			//Sensores de humedad, temperatura y presión.	

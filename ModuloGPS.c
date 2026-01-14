@@ -121,3 +121,96 @@ void procesaCadena(const char *cadena, const char delimitador ) {
         }
     }
 }
+
+
+static void gps_copy_str(char *dst, int dst_len, const char *src)
+{
+	int i = 0;
+
+	if (dst_len <= 0) return;
+	while (src[i] != '\0' && i < (dst_len - 1)) {
+		dst[i] = src[i];
+		i++;
+	}
+	dst[i] = '\0';
+}
+
+static int gps_is_gngga(const char *line)
+{
+	return (line[0] == '$' && line[1] == 'G' && line[2] == 'N' &&
+	        line[3] == 'G' && line[4] == 'G' && line[5] == 'A');
+}
+
+int GPS_ReadLatLon(char *lat, int lat_len, char *lon, int lon_len)
+{
+	static char last_lat[16] = "0";
+	static char last_lon[16] = "0";
+	char line[80];
+	char token[20];
+	char lat_token[20] = "";
+	char lon_token[20] = "";
+	char fix = '0';
+	char c;
+	int i = 0;
+	int field = 0;
+
+	if ((UART1STA & 1) == 0) {
+		gps_copy_str(lat, lat_len, last_lat);
+		gps_copy_str(lon, lon_len, last_lon);
+		return 0;
+	}
+
+	// Buscar inicio de trama.
+	do {
+		c = _getch1();
+	} while (c != '$');
+
+	line[0] = '$';
+	for (i = 1; i < (int)(sizeof(line) - 1); i++) {
+		c = _getch1();
+		if (c == '\n') {
+			break;
+		}
+		line[i] = c;
+	}
+	line[i] = '\0';
+
+	if (!gps_is_gngga(line)) {
+		gps_copy_str(lat, lat_len, last_lat);
+		gps_copy_str(lon, lon_len, last_lon);
+		return 0;
+	}
+
+	// Parsear campos separados por coma.
+	i = 0;
+	while (line[i] != '\0' && field <= 6) {
+		int t = 0;
+		while (line[i] != ',' && line[i] != '\0') {
+			if (t < (int)(sizeof(token) - 1)) {
+				token[t++] = line[i];
+			}
+			i++;
+		}
+		token[t] = '\0';
+
+		if (field == 2) {
+			gps_copy_str(lat_token, (int)sizeof(lat_token), token);
+		} else if (field == 4) {
+			gps_copy_str(lon_token, (int)sizeof(lon_token), token);
+		} else if (field == 6) {
+			fix = token[0];
+		}
+
+		if (line[i] == ',') i++;
+		field++;
+	}
+
+	if (fix != '0' && lat_token[0] != '\0' && lon_token[0] != '\0') {
+		gps_copy_str(last_lat, (int)sizeof(last_lat), lat_token);
+		gps_copy_str(last_lon, (int)sizeof(last_lon), lon_token);
+	}
+
+	gps_copy_str(lat, lat_len, last_lat);
+	gps_copy_str(lon, lon_len, last_lon);
+	return (fix != '0');
+}
