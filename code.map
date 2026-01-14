@@ -1,0 +1,175 @@
+Archive member included to satisfy reference by file (symbol)
+
+c:/tp1_rv32e/tools/xpack-risc_v/bin/../lib/gcc/riscv-none-elf/12.2.0/rv32e/ilp32e\libgcc.a(muldi3.o)
+                              C:\Users\INVITA~1\AppData\Local\Temp\ccs7YRYh.o (__mulsi3)
+c:/tp1_rv32e/tools/xpack-risc_v/bin/../lib/gcc/riscv-none-elf/12.2.0/rv32e/ilp32e\libgcc.a(div.o)
+                              C:\Users\INVITA~1\AppData\Local\Temp\ccs7YRYh.o (__divsi3)
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+RAM              0x0000000000000000 0x0000000000004000 xrw
+*default*        0x0000000000000000 0xffffffffffffffff
+
+Linker script and memory map
+
+
+.text           0x0000000000000000     0x2f24
+                0x0000000000000000                . = ALIGN (0x4)
+ *(.boot)
+ .boot          0x0000000000000000        0x4 C:\Users\INVITA~1\AppData\Local\Temp\ccg3x4nq.o
+ *(.text)
+ .text          0x0000000000000004       0x68 C:\Users\INVITA~1\AppData\Local\Temp\ccg3x4nq.o
+                0x0000000000000060                delay_loop
+ .text          0x000000000000006c     0x23a4 C:\Users\INVITA~1\AppData\Local\Temp\ccs7YRYh.o
+                0x000000000000006c                irq1_handler
+                0x00000000000000d0                irq2_handler
+                0x0000000000000120                irq5_handler
+                0x0000000000000170                irq6_handler
+                0x00000000000001c0                irq7_handler
+                0x0000000000000230                _putch
+                0x0000000000000704                _puts
+                0x0000000000000738                _getch
+                0x0000000000000754                haschar
+                0x0000000000000764                _getchUART0
+                0x00000000000007a8                _getchUART1
+                0x00000000000007ec                _printf
+                0x0000000000000828                _sprintf
+                0x0000000000000860                _getch1
+                0x000000000000087c                mi_strcmp
+                0x00000000000008a8                procesaCadena
+                0x0000000000000a60                lectura_GPS
+                0x0000000000000b40                irq4_handler
+                0x0000000000000ba8                spixfer
+                0x0000000000000bcc                writeBME680
+                0x0000000000000c18                startBME680
+                0x0000000000000c88                readBME680
+                0x0000000000000cc8                returnTemp
+                0x0000000000000ddc                returnPressure
+                0x0000000000001094                returnHUMIDITY
+                0x0000000000001258                spixfer1
+                0x000000000000127c                _memcpy
+                0x00000000000012a0                millis
+                0x00000000000012c8                SPI_transfer
+                0x0000000000001704                digitalWrite
+                0x000000000000171c                digitalRead
+                0x000000000000172c                LoraSx1262_sanityCheck
+                0x00000000000017b8                LoraSx1262_transmit
+                0x000000000000199c                LoraSx1262_lora_receive_async
+                0x0000000000001bb4                LoraSx1262_lora_receive_blocking
+                0x0000000000001c60                LoraSx1262_configSetPreset
+                0x0000000000001cfc                LoraSx1262_configSetBandwidth
+                0x0000000000001d44                LoraSx1262_configSetCodingRate
+                0x0000000000001d7c                LoraSx126_configSetSpreadingFactor
+                0x0000000000001dc4                LoraSx1262_frequencyToPLL
+                0x0000000000001e1c                LoraSx1262_configSetFrequency
+                0x0000000000001ef8                LoraSx1262_begin
+                0x0000000000002170                MCP3004_Read_Reg
+                0x00000000000021d4                Lectura_Gas
+                0x0000000000002200                Lectura_C0
+                0x0000000000002298                Lectura_CH4
+                0x00000000000022f8                irq3_handler
+                0x0000000000002394                getMEPC
+                0x00000000000023a0                irq0_handler
+ .text          0x0000000000002410       0x24 c:/tp1_rv32e/tools/xpack-risc_v/bin/../lib/gcc/riscv-none-elf/12.2.0/rv32e/ilp32e\libgcc.a(muldi3.o)
+                0x0000000000002410                __mulsi3
+ .text          0x0000000000002434       0xb4 c:/tp1_rv32e/tools/xpack-risc_v/bin/../lib/gcc/riscv-none-elf/12.2.0/rv32e/ilp32e\libgcc.a(div.o)
+                0x0000000000002434                __divsi3
+                0x000000000000243c                __udivsi3
+                0x000000000000243c                __hidden___udivsi3
+                0x0000000000002484                __umodsi3
+                0x00000000000024b8                __modsi3
+ *(.text*)
+ .text.startup  0x00000000000024e8      0x2c4 C:\Users\INVITA~1\AppData\Local\Temp\ccs7YRYh.o
+                0x00000000000024e8                main
+ *(.rodata)
+ .rodata        0x00000000000027ac       0x80 C:\Users\INVITA~1\AppData\Local\Temp\ccs7YRYh.o
+ *(.rodata*)
+ .rodata.str1.4
+                0x000000000000282c      0x6f8 C:\Users\INVITA~1\AppData\Local\Temp\ccs7YRYh.o
+                                        0x700 (size before relaxing)
+ *(.srodata)
+ *(.srodata*)
+                0x0000000000002f24                _etext = .
+                0x0000000000002f24                _sidata = _etext
+
+.rela.dyn       0x0000000000002f24        0x0
+ .rela.text     0x0000000000002f24        0x0 C:\Users\INVITA~1\AppData\Local\Temp\ccg3x4nq.o
+
+.data           0x0000000000002f24        0x4
+                0x0000000000002f24                . = ALIGN (0x4)
+                0x0000000000002f24                _sdata_values = LOADADDR (.data)
+                0x0000000000002f24                _sdata = .
+                0x0000000000002f24                _ram_start = .
+                0x0000000000002f24                . = ALIGN (0x4)
+ *(.data)
+ .data          0x0000000000002f24        0x0 C:\Users\INVITA~1\AppData\Local\Temp\ccg3x4nq.o
+ .data          0x0000000000002f24        0x0 C:\Users\INVITA~1\AppData\Local\Temp\ccs7YRYh.o
+ .data          0x0000000000002f24        0x0 c:/tp1_rv32e/tools/xpack-risc_v/bin/../lib/gcc/riscv-none-elf/12.2.0/rv32e/ilp32e\libgcc.a(muldi3.o)
+ .data          0x0000000000002f24        0x0 c:/tp1_rv32e/tools/xpack-risc_v/bin/../lib/gcc/riscv-none-elf/12.2.0/rv32e/ilp32e\libgcc.a(div.o)
+ *(.data*)
+ *(.sdata)
+ .sdata         0x0000000000002f24        0x4 C:\Users\INVITA~1\AppData\Local\Temp\ccs7YRYh.o
+ *(.sdata*)
+                0x0000000000002f28                . = ALIGN (0x4)
+                0x0000000000002f28                _edata = .
+
+.bss            0x0000000000002f28      0x48c
+                0x0000000000002f28                . = ALIGN (0x4)
+                0x0000000000002f28                _sbss = .
+ *(.bss)
+ .bss           0x0000000000002f28        0x0 C:\Users\INVITA~1\AppData\Local\Temp\ccg3x4nq.o
+ .bss           0x0000000000002f28      0x468 C:\Users\INVITA~1\AppData\Local\Temp\ccs7YRYh.o
+                0x0000000000002f28                udat
+                0x0000000000002f48                udat1
+                0x0000000000002f68                spiBuff
+                0x0000000000002f88                trama_GPS
+                0x0000000000003370                udat2
+ .bss           0x0000000000003390        0x0 c:/tp1_rv32e/tools/xpack-risc_v/bin/../lib/gcc/riscv-none-elf/12.2.0/rv32e/ilp32e\libgcc.a(muldi3.o)
+ .bss           0x0000000000003390        0x0 c:/tp1_rv32e/tools/xpack-risc_v/bin/../lib/gcc/riscv-none-elf/12.2.0/rv32e/ilp32e\libgcc.a(div.o)
+ *(.bss*)
+ *(.sbss)
+ .sbss          0x0000000000003390       0x24 C:\Users\INVITA~1\AppData\Local\Temp\ccs7YRYh.o
+                0x0000000000003390                inReceiveMode
+                0x0000000000003394                LoraSx1262_transmitTimeout
+                0x0000000000003398                LoraSx1262_lowDataRateOptimize
+                0x0000000000003399                LoraSx1262_spreadingFactor
+                0x000000000000339a                LoraSx1262_codingRate
+                0x000000000000339b                LoraSx1262_bandwidth
+                0x000000000000339c                LoraSx1262_pllFrequency
+                0x00000000000033a0                wrix2
+                0x00000000000033a1                rdix2
+                0x00000000000033a2                wrix1
+                0x00000000000033a3                rdix1
+                0x00000000000033a4                wrix
+                0x00000000000033a5                rdix
+                0x00000000000033a8                lectura_CH4
+                0x00000000000033ac                lectura_CO
+                0x00000000000033b0                estado
+ *(.sbss*)
+ *(COMMON)
+                0x00000000000033b4                . = ALIGN (0x4)
+                0x00000000000033b4                _ebss = .
+
+.heap           0x00000000000033b4        0x0
+                0x00000000000033b4                . = ALIGN (0x4)
+                0x00000000000033b4                _heap_start = .
+LOAD C:\Users\INVITA~1\AppData\Local\Temp\ccg3x4nq.o
+LOAD C:\Users\INVITA~1\AppData\Local\Temp\ccs7YRYh.o
+LOAD c:/tp1_rv32e/tools/xpack-risc_v/bin/../lib/gcc/riscv-none-elf/12.2.0/rv32e/ilp32e\libgcc.a
+OUTPUT(code.elf elf32-littleriscv)
+
+.riscv.attributes
+                0x0000000000000000       0x20
+ .riscv.attributes
+                0x0000000000000000       0x1a C:\Users\INVITA~1\AppData\Local\Temp\ccg3x4nq.o
+ .riscv.attributes
+                0x000000000000001a       0x20 C:\Users\INVITA~1\AppData\Local\Temp\ccs7YRYh.o
+ .riscv.attributes
+                0x000000000000003a       0x1a c:/tp1_rv32e/tools/xpack-risc_v/bin/../lib/gcc/riscv-none-elf/12.2.0/rv32e/ilp32e\libgcc.a(muldi3.o)
+ .riscv.attributes
+                0x0000000000000054       0x1a c:/tp1_rv32e/tools/xpack-risc_v/bin/../lib/gcc/riscv-none-elf/12.2.0/rv32e/ilp32e\libgcc.a(div.o)
+
+.comment        0x0000000000000000       0x33
+ .comment       0x0000000000000000       0x33 C:\Users\INVITA~1\AppData\Local\Temp\ccs7YRYh.o
+                                         0x34 (size before relaxing)
